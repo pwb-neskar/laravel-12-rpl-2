@@ -19,8 +19,8 @@ Route::get('/', function () {
 
 Route::get('/about', function () {
     return view('about');
-});
+})->name('get-about');
 
 Route::get('/user/dashboard', function () {
     return view('user.dashboard');
-});
+})->name('get-user-dashboard-page');
