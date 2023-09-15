@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CastController;
+use App\Http\Controllers\GenreController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,12 +23,17 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', [UserController::class, 'index']);
 
-// Route::get('/about', function () {
-//     return view('about');
-// })->name('get-about');
+Route::get('/about', function () {
+    return view('layouts.master');
+})->name('get-about');
 
 Route::get('/form', [UserController::class, 'form']);
 
-Route::get('/user/dashboard', function () {
-    return view('user.dashboard');
+Route::get('/dashboard', function () {
+    return view('home');
 })->name('get-user-dashboard-page');
+
+Route::resource('/genre', GenreController::class);
+
+// For CRUD table cast
+Route::resource('/cast', CastController::class);
