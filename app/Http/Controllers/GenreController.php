@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Genre;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class GenreController extends Controller
 {
@@ -13,8 +13,10 @@ class GenreController extends Controller
     public function index()
     {
         //
-        $casts = DB::table('cast')->get();
-        return view('cast.index', compact('casts'));    }
+        $genres = Genre::all();
+        return view('genre.index', 
+        compact('genres'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -22,7 +24,7 @@ class GenreController extends Controller
     public function create()
     {
         //
-        return view('cast.create');
+        return view('genre.create');
     }
 
     /**
@@ -30,26 +32,30 @@ class GenreController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $request->validate([
-            'nama'  => 'required',
-            'umur'  => 'required',
-            'bio'   => 'required',
-        ]);
+        // validasi data
+        $request->validate(
+            [
+                'nama'  => 'required|unique:genres,nama|min:5',
+            ],[
+                'nama.required' => 'Nama harus diisi!',
+                'nama.unique'   => 'Nama sudah pernah digunakan!',
+                'nama.min'      => 'Nama harus lebih dari 5 karakter',
+            ]);
+        
+        
+        // insert data use Eloquent ORM.
+        $genre = new Genre;
+        $genre->nama = $request->nama;
+        $genre->save();
 
-        $query = DB::table('cast')->insert([
-            'nama'  => $request['nama'],
-            'umur'  => $request['umur'],
-            'bio'   => $request['bio'],
-        ]);
-
-        return redirect('/cast');
+        // lakukan redirect ke halaman index
+        return redirect()->route('genre.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Genre $genre)
     {
         //
     }
@@ -57,7 +63,7 @@ class GenreController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Genre $genre)
     {
         //
     }
@@ -65,7 +71,7 @@ class GenreController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Genre $genre)
     {
         //
     }
@@ -73,8 +79,12 @@ class GenreController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Genre $genre)
     {
         //
+        $genre = Genre::where('id', $genre->id)->delete();
+        // $genre = Genre::find($genre->id);
+        // $genre->delete();
+        return redirect()->route('genre.index');
     }
 }

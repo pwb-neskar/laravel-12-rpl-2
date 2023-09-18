@@ -32,19 +32,25 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form action="{{ route('cast.store') }}" method="POST">
-              @csrf
               <div class="card-body">
                 <div class="form-group">
                   <label for="nama">Nama</label>
-                  <input type="text" name="nama" id="nama" class="form-control" placeholder="Enter Nama" >
+                  <input type="text" name="nama" id="nama" class="form-control" placeholder="Enter Nama" value="{{ $cast[0]->nama }}" disabled>
                 </div>
+                <div class="form-group">
+                  <label for="umur">Umur</label>
+                  <input type="number" name="umur" id="umur" class="form-control" placeholder="Enter Umur" value="{{ $cast[0]->umur }}"" disabled>
+                </div>
+                <div class="form-group">
+                  <label for="bio">Biografi</label>
+                  <textarea name="bio" id="bio" cols="30" rows="10" class="form-control" placeholder="Input Biografi" disabled>{{ $cast[0]->bio }}</textarea>
+                </div>
+              </div>
               <!-- /.card-body -->
 
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
               </div>
-            </form>
           </div>
           <!-- /.card -->
         </div>
