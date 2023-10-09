@@ -45,7 +45,7 @@ Route::get('/about', function () {
 Route::get('/form', [UserController::class, 'form']);
 
 
-Route::resource('/genre', GenreController::class);
+Route::resource('/genre', GenreController::class)->middleware('auth');
 
 // For CRUD table cast
-Route::resource('/cast', CastController::class);
+Route::resource('/cast', CastController::class)->middleware('auth');

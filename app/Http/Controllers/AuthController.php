@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    public $auth = Auth::class;
+
     public function __construct()
     {
         $this->middleware('guest')->except([
@@ -46,27 +48,47 @@ class AuthController extends Controller
     // login form
     public function login()
     {
-
+        return view('auth.login');
     }
 
     // auth proses login
     public function auth(Request $request)
     {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials))
+        {
+            $request->session()->regenerate();
+            return redirect()->route('dashboard');
+        }
+
+        return redirect()->back()->withErrors([
+            'email' => 'email atau password tidak ditemukan',
+        ])->onlyInput('email');
+        
     }
 
     // logout proses
-    public function logout(Request $request)
+    public function logout(Request $request, Auth $auth)
     {
-        Auth::logout();
+        $auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('auth.login');
     }
 
     // dasboard page
-    public function dashboard()
+    public function dashboard(Auth $auth)
     {
-        return view('auth.dashboard');
+        if ($auth::check())
+        {
+            return view('auth.dashboard');
+        }
+
+        return redirect()->route('auth.login');
     }
 }
