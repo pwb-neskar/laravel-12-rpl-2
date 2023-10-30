@@ -5,6 +5,12 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CastController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FilmController;
+use App\Http\Controllers\PeranController;
+use App\Http\Controllers\ProfileController;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -49,3 +55,10 @@ Route::resource('/genre', GenreController::class)->middleware('auth');
 
 // For CRUD table cast
 Route::resource('/cast', CastController::class)->middleware('auth');
+// FOR CRUD Table Film
+Route::resource('/film', FilmController::class)->middleware('auth');
+
+Route::get('/film/{film}/peran/create', [PeranController::class, 'create'])->name('peran.create')->middleware('auth');
+Route::post('/film/{film}/peran', [PeranController::class, 'store'])->name('peran.store')->middleware('auth');
+
+Route::get('/profile/{user}/show', [ProfileController::class, 'show'])->name('profile.show')->middleware('auth');

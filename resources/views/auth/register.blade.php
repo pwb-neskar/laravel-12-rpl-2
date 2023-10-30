@@ -59,6 +59,39 @@
         @error('password')
           <span class="text-danger">{{ $message }}</span>
         @enderror
+        <div class="input-group mb-3">
+          <input type="number" name="umur" class="form-control @error('umur') is-invalid @enderror" placeholder="umur">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        @error('umur')
+          <span class="text-danger">{{ $message }}</span>
+        @enderror
+        <div class="input-group mb-3">
+          <textarea name="bio" id="bio"  class="form-control @error('bio') is-invalid @enderror" placeholder="Bio"></textarea>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        @error('bio')
+          <span class="text-danger">{{ $message }}</span>
+        @enderror
+        <div class="input-group mb-3">
+          <textarea name="alamat" id="alamat"  class="form-control @error('alamat') is-invalid @enderror" placeholder=" alamat"></textarea>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        @error('alamat')
+          <span class="text-danger">{{ $message }}</span>
+        @enderror
         <div class="row">
           <div class="col-8">
             </div>

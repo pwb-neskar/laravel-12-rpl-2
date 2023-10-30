@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('perans', function (Blueprint $table) {
             $table->id();           
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users'); 
+            $table->unsignedBigInteger('cast_id');
+            $table->foreign('cast_id')->references('id')->on('cast'); 
             $table->unsignedBigInteger('film_id');
             $table->foreign('film_id')->references('id')->on('films'); 
             $table->string('nama', 45);
+            $table->timestamps();
         });
     }
 
